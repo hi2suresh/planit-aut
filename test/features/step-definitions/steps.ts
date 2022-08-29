@@ -1,15 +1,28 @@
 import { Given, When, Then } from '@wdio/cucumber-framework';
+import ContactPage from '../../page-objects/ContactPage';
 
 /** Given Steps **/
-Given(/Contact page is opened/, async function () {
-  await browser.url('/');
-  await browser.pause();
+Given(/(.*) page is opened/, async function (page: string) {
+  switch (page) {
+    case 'Contact':
+      ContactPage.navigateTo();
+      break;
+
+    case 'Shop':
+      ContactPage.navigateTo();
+      break;
+
+    default:
+      throw Error('Invalid page');
+  }
 });
 
 /** When Steps **/
 When(
-  /I click on submit with out entering mandatory data/,
-  async function () {}
+  /user clicks on submit with out entering mandatory data/,
+  async function () {
+    ContactPage.clickSubmit();
+  }
 );
 
 When(
@@ -27,8 +40,4 @@ Then(
   }
 );
 
-Then(
-  /(.*) message is shown to the user/,
-  async function (string sucessMessage) {
-  }
-);
+Then(/(.*) message is shown to the user/, async function (successMessage) {});

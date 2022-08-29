@@ -1,10 +1,10 @@
 Feature: Validate Contact Page
 
     Background: Navigate to Contact page
-      Given Contact page is opened
+      Given <Contact> page is opened
 
     Scenario: Contact page shows relevant errors for missing mandatory fields
-      When I click on submit with out entering mandatory data
+      When user clicks on submit with out entering mandatory data
       Then Contact page shows the following errors for missing mandatory fields
         | MissingField  | ExpectedFieldError  |
         | ForeName      | Forename is required |
@@ -12,13 +12,9 @@ Feature: Validate Contact Page
         | Message       | Message is required|
 
 
-    Scenario: Validate successful contact submission message
-          When I enter the following data in the contact page
-            | Field         | InputValue  |
-            | ForeName      | AutoTestForename |
-            | Email         | auto@autotest.com  |
-            | Message       | Automation with JS is cool|
-          And I click on submit
+    Scenario: Fill the mandatory fields, submit form and validate success message
+          When user enters "AutoTestForename", "auto@autotest.com" and "Automation with JS is cool" data in the contact page
+          And clicks on submit
           Then "Thanks AutoTestForename, we appreciate your feedback." message is shown to the user
 
 
