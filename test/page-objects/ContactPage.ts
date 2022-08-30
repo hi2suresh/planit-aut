@@ -1,3 +1,5 @@
+import BasePage from './BasePage';
+
 class ContactPage extends BasePage {
   constructor() {
     super();
@@ -26,7 +28,7 @@ class ContactPage extends BasePage {
     return $('#message-err');
   }
   get submit() {
-    return $('//a[text()="Submit"]');
+    return $("//a[text()='Submit']");
   }
 
   get alertSuccessMessage() {
@@ -36,8 +38,7 @@ class ContactPage extends BasePage {
   /** Contact Page Actions */
 
   async navigateTo() {
-    await browser.url('/contact');
-    await this.submit.waitForExist({ timeout: this.shortWaitTimeOut });
+    await super.navigateTo('#/contact');
   }
 
   async clickSubmit() {
@@ -60,13 +61,14 @@ class ContactPage extends BasePage {
   }
 
   async getErrorMessage(field: string): Promise<string> {
+    console.log(`Field value is: ${field}`);
     let element = null;
-    if (field.includes('Forename')) {
-      element = this.forenameMissingError;
+    if (field.includes('ForeName')) {
+      element = await this.forenameMissingError;
     } else if (field.includes('Email')) {
-      element = this.emailMissingError;
+      element = await this.emailMissingError;
     } else if (field.includes('Message')) {
-      element = this.messageMissingError;
+      element = await this.messageMissingError;
     }
 
     return await element.getText();

@@ -13,8 +13,7 @@ Feature: Validate Contact Page
 
 
     Scenario: Fill the mandatory fields, submit form and validate success message
-          When user enters "AutoTestForename", "auto@autotest.com" and "Automation with JS is cool" data in the contact page
-          And clicks on submit
+          When user submits form with "AutoTestForename", "auto@autotest.com" and "Automation with JS is cool" data in the contact page
           Then "Thanks AutoTestForename, we appreciate your feedback." message is shown to the user
 
 
