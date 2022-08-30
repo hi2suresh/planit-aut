@@ -38,7 +38,8 @@ class ContactPage extends BasePage {
   /** Contact Page Actions */
 
   async navigateTo() {
-    await super.navigateTo('#/contact');
+    // @ts-ignore
+    await super.navigateTo(`${browser.config.planit_AUT_Url}#/contact`);
   }
 
   async clickSubmit() {

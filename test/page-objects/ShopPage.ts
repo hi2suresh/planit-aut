@@ -10,7 +10,8 @@ class ShopPage extends BasePage {
   }
 
   async navigateTo() {
-    await super.navigateTo('#/shop');
+    // @ts-ignore
+    await super.navigateTo(`${browser.config.planit_AUT_Url}#/shop`);
   }
 
   async getProductBuyButton(productName: string): Promise<WebdriverIO.Element> {

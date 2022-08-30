@@ -3,6 +3,7 @@ Feature: Validate Shop Page
     Background: Navigate to Shop page
       Given <Shop> page is opened
 
+    @smoke @regression
     Scenario: User should be able to add the products in the cart and the cart details should reflect correctly
       When user selects the following products from the shop page
         | ProductName       | ProductQuantity   |
