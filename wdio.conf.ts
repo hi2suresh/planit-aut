@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import type { Options } from '@wdio/types';
 import allure from '@wdio/allure-reporter';
 import fs from 'fs';
+import moment from 'moment';
 
 dotenv.config();
 export const config: Options.Testrunner = {
@@ -325,7 +326,11 @@ export const config: Options.Testrunner = {
       console.error(`>>Scenario ${JSON.stringify(scenario)}`);
       console.error(`>>Step ${JSON.stringify(step)}`);
       console.error(`>>Result ${JSON.stringify(result)}`);
-      await browser.takeScreenshot();
+      await browser.saveScreenshot(
+        './reports/screenshots/Fail_' +
+          moment().format('DD-MMM-YYYY-HH-MM-SS') +
+          '.png'
+      );
     }
   },
   /**
