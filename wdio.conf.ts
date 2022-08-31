@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
 import type { Options } from '@wdio/types';
+import allure from '@wdio/allure-reporter';
+import fs from 'fs';
 
+dotenv.config();
 export const config: Options.Testrunner = {
   //
   // ====================
@@ -124,6 +128,7 @@ export const config: Options.Testrunner = {
   // gets prepended directly.
   baseUrl: 'https://jupiter.cloud.planittesting.com/#/',
   // @ts-ignore
+  environment: 'LOCAL',
   planit_AUT_Url: 'https://jupiter.cloud.planittesting.com/',
   winstonLogLevel: 'info',
   // Default timeout for all waitFor* commands.
@@ -162,7 +167,17 @@ export const config: Options.Testrunner = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
+  reporters: [
+    'spec',
+    [
+      'allure',
+      {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        useCucumberStepReporter: true,
+      },
+    ],
+  ],
 
   //
   // If you are using Cucumber you need to specify the location of your step definitions.
@@ -206,8 +221,11 @@ export const config: Options.Testrunner = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function (config, capabilities) {
+    if (process.env.Runner === 'LOCAL' && fs.existsSync('./allure-results')) {
+      fs.rmdirSync('./allure-results', { recursive: true });
+    }
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -291,8 +309,15 @@ export const config: Options.Testrunner = {
    * @param {number}             result.duration  duration of scenario in milliseconds
    * @param {Object}             context          Cucumber World object
    */
-  // afterStep: function (step, scenario, result, context) {
-  // },
+  afterStep: async function (step, scenario, result, context) {
+    // Take Screenshot if test step has failed
+    if (!result.passed) {
+      console.error(`>>Scenario ${JSON.stringify(scenario)}`);
+      console.error(`>>Step ${JSON.stringify(step)}`);
+      console.error(`>>Result ${JSON.stringify(result)}`);
+      await browser.takeScreenshot();
+    }
+  },
   /**
    *
    * Runs after a Cucumber Scenario.
@@ -311,8 +336,11 @@ export const config: Options.Testrunner = {
    * @param {String}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  // afterFeature: function (uri, feature) {
-  // },
+  afterFeature: function (uri, feature) {
+    // Add Environment details
+    // @ts-ignore
+    allure.addEnvironment(`Environment: `, browser.config.environment);
+  },
 
   /**
    * Runs after a WebdriverIO command gets executed

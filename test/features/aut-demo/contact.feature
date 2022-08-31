@@ -15,7 +15,6 @@ Feature: Validate Contact Page
 
     @smoke @regression
     Scenario: Fill the mandatory fields, submit form and validate success message
-          Given <Contact> page is opened
           When user submits form with "AutoTestForename", "auto@autotest.com" and "Automation with JS is cool" data in the contact page
           Then "Thanks AutoTestForename, we appreciate your feedback." message is shown to the user
 
