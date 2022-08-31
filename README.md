@@ -7,7 +7,7 @@ WebDriverIO Integration With Cucumber and Github to run E2E tests. <br />
 ![image](https://user-images.githubusercontent.com/1137436/187650087-d3445795-1ee4-4ac0-bc07-e76f484951e0.png)
 
 ## Framework Architechure <br />
-![image](https://user-images.githubusercontent.com/1137436/187646842-ea815b69-f647-4d44-adde-e01d94843d0d.png)
+![image](https://user-images.githubusercontent.com/1137436/187652584-c334ead6-b817-4827-af34-66c47b182ffc.png)
 
 ## Steps to get the code and run the tests locally
 1. `git clone https://github.com/hi2suresh/planit-aut.git`
