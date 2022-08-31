@@ -6,7 +6,7 @@ class ShopPage extends BasePage {
   }
 
   get cart() {
-    return $("//a[contains(text(), 'Cart')]");
+    return $('#nav-cart');
   }
 
   /** Shop Page Actions */

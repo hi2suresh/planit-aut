@@ -6,7 +6,7 @@ import logger from '../../../helper/logger';
 
 /** Given Steps **/
 Given(/<(.*)> page is opened/, async function (page: string) {
-  logger.info('Opening ${page} page');
+  logger.info(`Opening ${page} page`);
   switch (page) {
     case 'Contact':
       await ContactPage.navigateTo();

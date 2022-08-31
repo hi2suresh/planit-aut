@@ -89,6 +89,16 @@ export const config: Options.Testrunner = {
       //
       browserName: 'chrome',
       acceptInsecureCerts: true,
+      // We need to extends some Chrome flags in order to tell Chrome to run headless
+      'goog:chromeOptions': {
+        args: [
+          '--headless',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--window-size=1920,1080',
+          '--start-maximized',
+        ],
+      },
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
       // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
