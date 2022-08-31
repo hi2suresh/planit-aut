@@ -38,3 +38,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run AUT tests
         run: npm run uat:all
+
+      - uses: actions/upload-artifact@v1
+          if: failure()
+          with:
+            name: logs
+            path: logs
