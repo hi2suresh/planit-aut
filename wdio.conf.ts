@@ -125,6 +125,7 @@ export const config: Options.Testrunner = {
   baseUrl: 'https://jupiter.cloud.planittesting.com/#/',
   // @ts-ignore
   planit_AUT_Url: 'https://jupiter.cloud.planittesting.com/',
+  winstonLogLevel: 'info',
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
   //

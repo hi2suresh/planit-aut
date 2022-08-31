@@ -10,6 +10,11 @@ export default class BasePage {
   }
 
   /** Reusable methods */
+
+  /**
+   * Navigates to the given url
+   * @param path e.g. shop, cart
+   */
   async navigateTo(path: string) {
     await browser.url(path);
     await browser.waitUntil(
@@ -24,19 +29,32 @@ export default class BasePage {
     await browser.maximizeWindow();
   }
 
+  /**
+   * Clicks on the given webelement
+   * @param element
+   */
   async click(element: WebdriverIO.Element) {
     await element.waitForClickable({ timeout: this.mediumWaitTimeOut });
     if (!element.elementId) throw Error(element.error.message);
     await element.click();
-    //await browser.pause(60000);
   }
 
+  /**
+   * Types into the given input
+   * @param element
+   * @param text
+   */
   async type(element: WebdriverIO.Element, text: string) {
     await element.waitForDisplayed({ timeout: this.shortWaitTimeOut });
     if (!element.elementId) throw Error(element.error.message);
     await element.setValue(text);
   }
 
+  /**
+   * Checks if the element is present or not present
+   * @param element
+   * @returns true or false
+   */
   async isElementPresent(element: WebdriverIO.Element): Promise<Boolean> {
     return await element.isExisting();
   }

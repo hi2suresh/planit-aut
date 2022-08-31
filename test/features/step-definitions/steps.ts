@@ -2,10 +2,11 @@ import { Given, When, Then } from '@wdio/cucumber-framework';
 import CartPage from '../../page-objects/CartPage';
 import ContactPage from '../../page-objects/ContactPage';
 import ShopPage from '../../page-objects/ShopPage';
+import logger from '../../../helper/logger';
 
 /** Given Steps **/
 Given(/<(.*)> page is opened/, async function (page: string) {
-  console.log(page);
+  logger.info('Opening ${page} page');
   switch (page) {
     case 'Contact':
       await ContactPage.navigateTo();
@@ -24,6 +25,7 @@ Given(/<(.*)> page is opened/, async function (page: string) {
 When(
   /user clicks on submit with out entering mandatory data/,
   async function () {
+    logger.info('Clicking on Submit...');
     await ContactPage.clickSubmit();
   }
 );
@@ -31,6 +33,9 @@ When(
 When(
   /user submits form with "(.*)", "(.*)" and "(.*)" data in the contact page/,
   async function (name: string, email: string, message: string) {
+    logger.info(
+      `Submitting the following ${name}, ${email}, ${message} Contact details`
+    );
     await ContactPage.submitForm(name, email, message);
   }
 );
@@ -38,6 +43,7 @@ When(
 When(
   /user selects the following products from the shop page/,
   async function (datatable) {
+    logger.info(`Datatable data is...${JSON.stringify(datatable.hashes())}`);
     for (const obj of datatable.hashes()) {
       await ShopPage.buyProduct(obj['ProductName'], obj['ProductQuantity']);
     }
@@ -45,6 +51,7 @@ When(
 );
 
 When(/user navigates to Cart Page/, async function () {
+  logger.info('Clicking on Cart link...');
   await ShopPage.gotoCartPage();
 });
 
@@ -52,9 +59,8 @@ When(/user navigates to Cart Page/, async function () {
 Then(
   /Contact page shows the following errors for missing mandatory fields/,
   async function (datatable) {
-    console.log(JSON.stringify(datatable.hashes()));
+    logger.info(`Datatable data is...${JSON.stringify(datatable.hashes())}`);
     for (const obj of datatable.hashes()) {
-      console.log(JSON.stringify(obj));
       let actualErrorMessage = await ContactPage.getErrorMessage(
         obj['MissingField']
       );
@@ -74,7 +80,7 @@ Then(
 Then(
   /the Cart page will be updated with the following data/,
   async function (datatable) {
-    console.log(JSON.stringify(datatable.hashes()));
+    logger.info(`Datatable data is...${JSON.stringify(datatable.hashes())}`);
     for (const obj of datatable.hashes()) {
       console.log(JSON.stringify(obj));
       let actualQuantity = await CartPage.getProductQuantity(

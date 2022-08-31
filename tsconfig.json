@@ -8,6 +8,7 @@
       "expect-webdriverio"
     ],
     "target": "es2019",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "esModuleInterop":true
   }
 }

@@ -37,15 +37,27 @@ class ContactPage extends BasePage {
 
   /** Contact Page Actions */
 
+  /**
+   * Navigates to the contact page
+   */
   async navigateTo() {
     // @ts-ignore
     await super.navigateTo(`${browser.config.planit_AUT_Url}#/contact`);
   }
 
+  /**
+   * Clicks on Form Submit
+   */
   async clickSubmit() {
     await this.click(await this.submit);
   }
 
+  /**
+   * Enters the form data and clicks on submit
+   * @param name
+   * @param email
+   * @param message
+   */
   async submitForm(name: string, email: string, message: string) {
     await this.type(await this.forename, name);
     await this.type(await this.email, email);
@@ -53,6 +65,10 @@ class ContactPage extends BasePage {
     this.clickSubmit();
   }
 
+  /**
+   * Gets the success alert message details
+   * @returns
+   */
   async getSuccessMessage(): Promise<string> {
     await this.alertSuccessMessage.waitForExist({
       timeout: this.longWaitTimeOut,
@@ -61,6 +77,11 @@ class ContactPage extends BasePage {
     return await (await this.alertSuccessMessage).getText();
   }
 
+  /**
+   * Returns the error message of the missing field
+   * @param field e.g. Forename, Email
+   * @returns
+   */
   async getErrorMessage(field: string): Promise<string> {
     console.log(`Field value is: ${field}`);
     let element = null;
